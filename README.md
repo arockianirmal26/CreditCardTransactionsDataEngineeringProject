@@ -1,5 +1,5 @@
 
-# Credit Card Transactions - Stream/Batch Processing in AWS
+# Credit Card Fake/Authentic Transactions Reporting- Stream/Batch Processing in AWS
 
 # Introduction & Goals
 In this project, I took a credit card transaction dataset from Kaggle and I tried to built an end to end stream/batch pipeline (data collection, ETL, Reporting, etc.) in AWS using different AWS services. Below are the goals/use cases that I defined when I started with this project.
