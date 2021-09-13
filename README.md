@@ -167,10 +167,7 @@ The step by step process of the above tasks (Batch Processing) are documented as
 
 
 # Conclusion
-Write a comprehensive conclusion.
-- How did this project turn out
-- What major things have you learned
-- What were the biggest challenges
+This project turned out pretty well than I expected. I understood the basics of the AWS Infrastructure and its services like S3, RDS, Kinesis, API Gateway, Lambda functions, Redshift, EC2, Quicksight, Athena etc., very well. I can now confidently work on AWS data projects.
 
 # Follow Me On
 LinkedIn: https://www.linkedin.com/in/arockianirmal/
