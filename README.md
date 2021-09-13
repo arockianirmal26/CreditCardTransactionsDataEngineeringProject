@@ -47,7 +47,6 @@ Fact: Transaction , Dimensions: Customer, Address, Merchant, Time
     - [Visualizations](#visualizations)
   - [Batch Processing](#batch-processing)
     - [Visualizations](#visualizations)
-- [Demo](#demo)
 - [Conclusion](#conclusion)
 - [Follow Me On](#follow-me-on)
 - [Appendix](#appendix)
@@ -148,14 +147,17 @@ Athena & Redshift Spectrum: Using these two services I could able to query the d
 
 ### Visualizations
 Once the batch processing has been completed, I could able to build dashboards on the Datawarehouse using Amazon Quicksight. Below is a sample dasboard.
+
 ![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/a30ba02f5a9d48deca19f6ee15f1c53a1d7b436a/images/redshift_dash.png)
 
 Also I could able to built dashboards on the data from S3 data lake using Athena and Redshift Spectrum in Quicksight.
 
 Dashboard using Athena as data source
+
 ![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/a30ba02f5a9d48deca19f6ee15f1c53a1d7b436a/images/athena_dash.png)
 
 Dashboard using RedshiftSpectrum as data source
+
 ![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/a30ba02f5a9d48deca19f6ee15f1c53a1d7b436a/images/spectrum_dash.png)
 
 The step by step process of the above tasks (Batch Processing) are documented as medium blog posts as below.
