@@ -2,8 +2,16 @@
 # Stream and Batch Processing of Credit Card Transactions in AWS
 
 # Introduction & Goals
-In this project, I took a credit card transaction dataset from Kaggle and I tried to built an end to end stream/batch pipelines (data collection, ETL, Reporting, etc.) in AWS using different AWS services. Below are the goals/use cases that I defined when I started with this project.
+Cloud computing is changing the way that businesses operate. As a Datawarehouse/ETL professional with more than 6+ years of experience, now I want to get into building data warehouses in the cloud. With that in mind and to understand the different cloud services, I built a data processing pipeline in AWS.
+In this hobby project, I took a credit card transaction dataset from open-source platform Kaggle and tried to built an end to end stream/batch pipelines (data collection, ETL, Reporting, etc.) in AWS using different AWS services. Below are the goals/use cases that I defined when I started with this project.
 
+Objectives of this project:
+
+- Build and understand a data processing framework in AWS used for stream and batch data loading by companies
+- Setup and understand cloud components involved in data streaming and batch processing (API gateway, kinesis, lambda functions, S3, Redshift, RDS, QuickSight, Cloud9 etc.)
+- Understand how to spot failure points in an data processing pipeline and how to build systems resistant to failures and errors
+- Understand how to approach or build an data processing pipeline from the ground up
+- 
 **Main Use Case (Transactional Database)**
 
 1. *Work with Financial Transactions:*
@@ -61,10 +69,7 @@ https://www.kaggle.com/kartik2112/fraud-detection
 
 
 # Used Tools
-- Explain which tools do you use and why
-- How do they work (don't go too deep into details, but add links)
-- Why did you choose them
-- How did you set them up
+![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/e5b8b146347639d3b349aa1a4fcc1c1a276b1d15/images/used_tools.PNG)
 
 ## Connect
 ## Buffer
