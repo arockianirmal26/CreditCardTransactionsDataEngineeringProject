@@ -52,7 +52,7 @@ https://www.kaggle.com/kartik2112/fraud-detection
 
 **ER Diagram for Stream Processing Pipeline (OLTP)**
 
-![alt text](https://miro.medium.com/max/3005/1*nnjxMRTXv78gbnQNOtlL9A.jpeg)
+![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/4f4045a185381399500ad353553da4f9044d38b4/images/oltp.jpeg)
 
 
 **ER Diagram for Batch Processing Pipeline (OLAP)**
