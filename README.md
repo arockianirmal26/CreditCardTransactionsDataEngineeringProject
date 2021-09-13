@@ -1,5 +1,5 @@
 
-# Stream and Batch Processing of Credit Card Transactions in AWS
+# AWS Stream and Batch Processing Pipelines for Credit Card Transactions
 
 # Introduction & Goals
 Cloud computing is changing the way that businesses operate. As a Datawarehouse/ETL professional with more than 6+ years of experience, now I want to get into building data warehouses in the cloud. With that in mind and to understand the different cloud services, I built a data processing pipeline in AWS.
@@ -106,11 +106,24 @@ Grafana: Dasboards are built to visualize the data from the Serverless Aurora RD
 Quicksight: Dasboards are built to visualize the data from the Redshift data warehouse and S3.
 
 # Pipelines
-- Explain the pipelines for processing that you are building
-- Go through your development and add your source code
-
 ## Stream Processing
 ![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/main/images/sp.PNG)
+
+Credit Card Transaction Data: As mentioned already this is the kaggle dataset. I also inserted some invalid rows in the dataset (for example the credit card number or transaction numbers are null. But those details are mandatory for every valid transaction). This dataset is stored on the local PC.
+
+Local Python Script: A [python script](https://github.com/arockianirmal26/MediumBlogPosts/blob/main/AWS_Stream_Processing_Pipeline/put_streaming_data_to_API.py) has been created locally to send the transactional data to AWS API Gateway as put request.
+
+AWS API Gateway: This API Gateway acts as a bridge between the local csv data and kinesis data streams.
+
+Lambda Function — Write to Kinesis Data Streams: Once a transaction data reaches the API gateway, this [lambda function](https://github.com/arockianirmal26/MediumBlogPosts/blob/main/AWS_Stream_Processing_Pipeline/lambda_write_to_kinesis.py) will be triggered. The JSON format data is now validated here against the JSON schema defined in the lambda function. If the validation is successful, the transaction data will be sent to the respective kinesis data stream. If not the transaction data will be diverted to the S3 bucket which contains invalid data. A S3 bucket has been created to store all the invalid transactions. Each transaction will be stored as a separate file. The name of the file will be the current timestamp.
+
+AWS Kinesis Data Stream: A basic kinesis data stream has been created with the number of open shards = 1 and with the data retention period of one day. Once the event reaches kinesis the write to aurora database function will be triggered.  
+
+Lambda Function — Write to RDS Aurora Serverless: This [lambda function](https://github.com/arockianirmal26/MediumBlogPosts/blob/main/AWS_Stream_Processing_Pipeline/lambda_write_to_Aurora.py) will now take an event received from kinesis data streams and insert data to different OLTP tables in the aurora serverless database. There are many tables in the OLTP database. Hence only if all the inserts/updates on the tables for a particular event succeeds, then the transaction gets committed. If not, the transaction will be rolled back. Therefore all the SQL DML statements are enclosed within the transaction as in the code below.
+
+Serverless Aurora RDS: A serverless aurora RDS has been created to store the transactional data. Attached are the [DDL statements](https://github.com/arockianirmal26/MediumBlogPosts/blob/main/AWS_Stream_Processing_Pipeline/OLTP_Tables.txt) of the OLTP database tables.
+
+Once the local python script has been started, the pipelines ends after writing the transaction data to OLTP database to the respective tables. The cloud watch logs can be used to monitor the lambda function executions.
 
 ### Visualizations
 
