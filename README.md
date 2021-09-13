@@ -44,8 +44,6 @@ Fact: Transaction , Dimensions: Customer, Address, Merchant, Time
   - [Visualization](#visualization)
 - [Pipelines](#pipelines)
   - [Stream Processing](#stream-processing)
-    - [Storing Data Stream](#storing-data-stream)
-    - [Processing Data Stream](#processing-data-stream)
     - [Visualizations](#visualizations)
   - [Batch Processing](#batch-processing)
     - [Visualizations](#visualizations)
@@ -111,7 +109,7 @@ Quicksight: Dasboards are built to visualize the data from the Redshift data war
 
 Credit Card Transaction Data: As mentioned already this is the kaggle dataset. I also inserted some invalid rows in the dataset (for example the credit card number or transaction numbers are null. But those details are mandatory for every valid transaction). This dataset is stored on the local PC.
 
-Local Python Script: A [python script](https://github.com/arockianirmal26/MediumBlogPosts/blob/main/AWS_Stream_Processing_Pipeline/put_streaming_data_to_API.py) has been created locally to send the transactional data to AWS API Gateway as put request.
+Local Python Script: A [python script](https://github.com/arockianirmal26/MediumBlogPosts/blob/main/AWS_Stream_Processing_Pipeline/put_streaming_data_to_API.py) has been created locally to send the transactional data(converted to JSON format) to AWS API Gateway as put request.
 
 AWS API Gateway: This API Gateway acts as a bridge between the local csv data and kinesis data streams.
 
@@ -125,16 +123,46 @@ Serverless Aurora RDS: A serverless aurora RDS has been created to store the tra
 
 Once the local python script has been started, the pipelines ends after writing the transaction data to OLTP database to the respective tables. The cloud watch logs can be used to monitor the lambda function executions.
 
+BULK IMPORT TO Serverless Aurora RDS: I have also created a Cloud9 EC2 instance to load the data in bulk from S3 to Serverless Aurora RDS. Here is the [python script](https://github.com/arockianirmal26/MediumBlogPosts/blob/main/AWS_Bulk_Import_S3_to_RDS_using_Cloud9/s3_cloud9_aurora.py) that is being used for this purpose.
+
+The step by step process of the above tasks are documented as medium blog posts as below.
+[Building a Stream Processing Pipeline in AWS](https://arockianirmal26.medium.com/building-a-stream-processing-pipeline-in-aws-3224764a6d2b)
+[Bulk Import from AWS S3 Bucket into RDS Aurora Serverless using AWS Cloud9](https://arockianirmal26.medium.com/bulk-import-from-aws-s3-bucket-into-rds-aurora-serverless-using-aws-cloud9-10a793850765)
+
 ### Visualizations
+An EC2 instance has been created and grafana has been installed on the same. This EC2 instance has been created in the same VPC as the RDS. Below is a sample dashboard that has been created. On entering the credit card number and the date of birth, the details of the credit card holder and the recent transactions can be visualized. 
+
+![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/66c9e2426adfe128855c23f69aca09b314e6f80d/images/grafana_oltp_dashboard.png)
+
+The step by step process of the above task is documented as medium blog post as below.
+[Building a Grafana Dashboard in AWS on Serverless Aurora RDS](https://arockianirmal26.medium.com/building-a-grafana-dashboard-in-aws-on-serverless-aurora-rds-23d66a87c952)
 
 ## Batch Processing
 ![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/main/images/bp.PNG)
 
-### Visualizations
+S3 Data Lake: Here are the credit card transactions data are dumped in the .csv fomat. 
 
-# Demo
-- You could add a demo video here
-- Or link to your presentation video of the project
+Amazon Redshift: Redshift is Amazon's analytics database, and is designed to crunch large amounts of data as a data warehouse. A redshift cluster has been created for this project as a OLAP Database. Once the database has been created, a [staging table](https://github.com/arockianirmal26/MediumBlogPosts/blob/main/Populating%20Amazon%20Redshift%20DWH%20from%20S3%20%26%20QuickSight%20Reporting/transaction_staging_ddl.sql) has been created. Then the redshift copy command has been used to copy the .csv data from S3 to the created table. Then the star schema [tables](https://github.com/arockianirmal26/MediumBlogPosts/blob/main/Populating%20Amazon%20Redshift%20DWH%20from%20S3%20%26%20QuickSight%20Reporting/dwh_star_schema_dddl.sql) has been created in the data warehouse and loaded by the data warehouse [procedure](https://github.com/arockianirmal26/MediumBlogPosts/blob/main/Populating%20Amazon%20Redshift%20DWH%20from%20S3%20%26%20QuickSight%20Reporting/fact_dimensions_loading.sql). In real life only the warm data(data that we need often) are usually loaded to the database to reduce costs. The cold data (data that we do not need much often) can be kept in the datalake.   
+
+Athena & Redshift Spectrum: Using these two services I could able to query the data from the S3 data lake, similar to querying the database.
+
+### Visualizations
+Once the batch processing has been completed, I could able to build dashboards on the Datawarehouse using Amazon Quicksight. Below is a sample dasboard.
+![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/a30ba02f5a9d48deca19f6ee15f1c53a1d7b436a/images/redshift_dash.png)
+
+Also I could able to built dashboards on the data from S3 data lake using Athena and Redshift Spectrum in Quicksight.
+
+Dashboard using Athena as data source
+![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/a30ba02f5a9d48deca19f6ee15f1c53a1d7b436a/images/athena_dash.png)
+
+Dashboard using RedshiftSpectrum as data source
+![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/a30ba02f5a9d48deca19f6ee15f1c53a1d7b436a/images/spectrum_dash.png)
+
+The step by step process of the above tasks (Batch Processing) are documented as medium blog posts as below.
+[Populating Amazon Redshift DWH from S3 & QuickSight Reporting](https://arockianirmal26.medium.com/populating-amazon-redshift-dwh-from-s3-quicksight-reporting-f6194dce2446)
+[Amazon QuickSight Dashboard for S3 CSV Data Using Amazon Athena / Glue Crawler](https://arockianirmal26.medium.com/amazon-quicksight-dashboard-for-s3-csv-data-using-amazon-athena-6a38bda2d0f8)
+[Amazon QuickSight Dashboard for S3 CSV Data using Redshift Spectrum / Glue Crawler](https://arockianirmal26.medium.com/amazon-quicksight-dashboard-for-s3-csv-data-using-redshift-spectrum-glue-crawler-5173a69a6b8d)
+
 
 # Conclusion
 Write a comprehensive conclusion.
