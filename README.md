@@ -57,7 +57,7 @@ https://www.kaggle.com/kartik2112/fraud-detection
 
 **ER Diagram for Batch Processing Pipeline (OLAP)**
 
-![alt text](https://miro.medium.com/max/3235/1*F_U5HtcQpl7n-ySTwmFKtg.jpeg)
+![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/4f4045a185381399500ad353553da4f9044d38b4/images/olap.jpg)
 
 
 # Used Tools
