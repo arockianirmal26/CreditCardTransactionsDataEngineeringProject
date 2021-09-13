@@ -11,7 +11,7 @@ Objectives of this project:
 - Setup and understand cloud components involved in data streaming and batch processing (API gateway, kinesis, lambda functions, S3, Redshift, RDS, QuickSight, Cloud9 etc.)
 - Understand how to spot failure points in an data processing pipeline and how to build systems resistant to failures and errors
 - Understand how to approach or build an data processing pipeline from the ground up
-- 
+
 **Main Use Case (Transactional Database)**
 
 1. *Work with Financial Transactions:*
@@ -36,6 +36,7 @@ Fact: Transaction , Dimensions: Customer, Address, Merchant, Time
 
 - [The Data Set](#the-data-set)
 - [Used Tools](#used-tools)
+  - [Client](#client)
   - [Connect](#connect)
   - [Buffer](#buffer)
   - [Processing](#processing)
@@ -45,8 +46,9 @@ Fact: Transaction , Dimensions: Customer, Address, Merchant, Time
   - [Stream Processing](#stream-processing)
     - [Storing Data Stream](#storing-data-stream)
     - [Processing Data Stream](#processing-data-stream)
+    - [Visualizations](#visualizations)
   - [Batch Processing](#batch-processing)
-  - [Visualizations](#visualizations)
+    - [Visualizations](#visualizations)
 - [Demo](#demo)
 - [Conclusion](#conclusion)
 - [Follow Me On](#follow-me-on)
@@ -71,21 +73,51 @@ https://www.kaggle.com/kartik2112/fraud-detection
 # Used Tools
 ![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/e5b8b146347639d3b349aa1a4fcc1c1a276b1d15/images/used_tools.PNG)
 
+## Client
+Here the source data for the stream processing pipeline is loacted in the local PC in .csv format. The .csv data will be read by the local python script to post data to the AWS API endpoint.
+
 ## Connect
+In the scenario of stream processing, a data pipeline will pull the data from an API and send data to the buffer. AWS API Gateway POST method is used to pull data from the client. Every time when the data will reach to the API endpoint, it will trigger the lambda function and send data to AWS Kinesis.
+
 ## Buffer
+I used Kinesis in stream processing to queue the data. The data will lineup in Kinesis every time the API endpoint trigger the lambda function in the AWS.
+
 ## Processing
+Lambda functions: Used in the stream processing pipeline in different stages. Here I used two lambda functions. One to send data from API to Kinesis and the other to send data from Kinesis to Serverless Aurora RDS.
+
+Cloud9: AWS Cloud9 is a cloud-based integrated development environment (IDE) that lets us write, run, and debug our code with just a browser. This is just an EC2 instance. I used this service to bulk import data from S3 .csv file into Serverless Aurora RDS.
+
+AWS Glue Crawlers: Inorder to query the data directly from S3 using Athena and Redshift Spectrum, glue crawlers are used which inturn generates glue data catalog.
+
+Athena & Redshift Spectrum: Utilized to query data directly from S3.
+
+EC2 Instances: created a couple of EC2 instances for this project. One is to host Grafana and the other one for Cloud9.
+
 ## Storage
+S3: Amazon Simple Storage Service is a service that acts as a data lake in this project. Source credit card transactions are hosted here for batch/bulk load. After data processing at different stages, invalid data are also stored here.
+
+Serverless Aurora RDS: This is an OLTP database in this project. This is an relational database that contains highly normalized tables for the credit card transactions.
+
+Redshift: Datawareouse or OLAP database. A star schema has been built for this project on this relational database.
+
 ## Visualization
+Grafana: Dasboards are built to visualize the data from the Serverless Aurora RDS (OLTP).
+
+Quicksight: Dasboards are built to visualize the data from the Redshift data warehouse and S3.
 
 # Pipelines
 - Explain the pipelines for processing that you are building
 - Go through your development and add your source code
 
 ## Stream Processing
-### Storing Data Stream
-### Processing Data Stream
+![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/main/images/sp.PNG)
+
+### Visualizations
+
 ## Batch Processing
-## Visualizations
+![alt text](https://github.com/arockianirmal26/CreditCardTransactionsDataEngineeringProject/blob/main/images/bp.PNG)
+
+### Visualizations
 
 # Demo
 - You could add a demo video here
