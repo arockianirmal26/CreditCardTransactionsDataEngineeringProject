@@ -48,14 +48,14 @@ Fact: Transaction , Dimensions: Customer, Address, Merchant, Time
   - [Batch Processing](#batch-processing)
     - [Visualizations](#visualizations)
 - [Conclusion](#conclusion)
+- [Medium Blog Posts](#medium-blog-posts)
 - [Follow Me On](#follow-me-on)
 - [Appendix](#appendix)
 
 
 # The Data Set
-The dataset I used in this project is taken from Kaggle and it is called "Credit Card Transactions Fraud Detection Dataset". This is a simulated credit card transaction dataset containing legitimate and fraud transactions. It covers credit cards of 1000 customers doing transactions with a pool of 800 merchants. The dataset contains details about the customers, transactions, merchants and also a flag that states if the transaction is legit or fraud.
+The dataset I used in this project is taken from Kaggle and it is called ["Credit Card Transactions Fraud Detection Dataset"](https://www.kaggle.com/kartik2112/fraud-detection). This is a simulated credit card transaction dataset containing legitimate and fraud transactions. It covers credit cards of 1000 customers doing transactions with a pool of 800 merchants. The dataset contains details about the customers, transactions, merchants and also a flag that states if the transaction is legit or fraud.
 
-https://www.kaggle.com/kartik2112/fraud-detection
 
 **ER Diagram for Stream Processing Pipeline (OLTP)**
 
@@ -168,6 +168,9 @@ The step by step process of the above tasks (Batch Processing) are documented as
 
 # Conclusion
 This project turned out pretty well than I expected. I understood the basics of the AWS Infrastructure and its services like S3, RDS, Kinesis, API Gateway, Lambda functions, Redshift, EC2, Quicksight, Athena etc., very well. I can now confidently work on AWS data projects.
+
+# Medium Blog Posts
+In this [medium blog post](https://arockianirmal26.medium.com/data-engineering-project-aws-stream-and-batch-processing-pipelines-for-credit-card-transactions-81ea8369e280), I consolidated all the blog posts on which I documented each and every part of this project in detail.
 
 # Follow Me On
 LinkedIn: https://www.linkedin.com/in/arockianirmal/
